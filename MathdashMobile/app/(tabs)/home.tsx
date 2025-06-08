@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from "rea
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const loadFonts = () => {
   return Font.loadAsync({
@@ -11,17 +12,6 @@ const loadFonts = () => {
     "Manrope-Medium": require("@/assets/fonts/Manrope/static/Manrope-Medium.ttf"),
   });
 };
-
-/* 
-    - Bottom NavBar (done)
-    - Header displaying [Profile Pic, MathDash, Settings] (done)
-    - Play Button Appended at Bottom when scrolling (done)
-    - Daily Puzzles
-    - Train in Math
-    - Contests
-    - Coaching assisstant (gives hints for each problem shown)
-    - 1v1
-*/
 
 const fakeData = [
   {
@@ -53,6 +43,7 @@ const fakeData = [
 
 const HomeScreen = () => {
   const [loadedFont, setLoadedFont] = useState(false);
+  const insets = useSafeAreaInsets();
 
   useEffect(() => {
     loadFonts().then(() => setLoadedFont(true));
@@ -62,29 +53,31 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Icon name="user" size={20} style={styles.profileIcon} />
-        <Text style={styles.headerText}>MathDash</Text>
-        <Icon name="cog" size={20} style={styles.settingsIcon} />
+      <View style={[styles.headerWrapper, { paddingTop: insets.top + 10 }]}> 
+        <View style={styles.header}>
+          <Icon name="user" size={20} style={styles.profileIcon} />
+          <Text style={styles.headerText}>MathDash</Text>
+          <Icon name="cog" size={20} style={styles.settingsIcon} />
+        </View>
       </View>
 
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {fakeData.map((data, index) => (
-          <View key={index} style={styles.cardRow}>
-            <Image source={data.image} style={styles.cardImage} resizeMode="cover" />
-            <View style={styles.cardTextArea}>
-              <Text style={styles.cardTitle}>{data.bigText}</Text>
-              <Text style={styles.cardDescription}>{data.smallDescription}</Text>
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        {fakeData.map((item, index) => (
+          <View style={styles.card} key={index}>
+            <Image source={item.image} style={styles.cardImage} />
+            <View style={styles.cardTextWrapper}>
+              <Text style={styles.cardTitle}>{item.bigText}</Text>
+              <Text style={styles.cardDescription}>{item.smallDescription}</Text>
               <View style={styles.cardFooter}>
-                <Icon name="calendar" size={16} color="#888" />
-                <Text style={styles.cardFooterText}>   Updated Today</Text>
+                <Icon name="calendar" size={14} color="gray" />
+                <Text style={styles.cardFooterText}>Event Info</Text>
               </View>
             </View>
           </View>
         ))}
       </ScrollView>
 
-      <View style={styles.buttonView}>
+      <View style={[styles.buttonView, { bottom: insets.bottom + 70 }]}>
         <TouchableOpacity style={styles.bottomButton}>
           <Text style={styles.bottomButtonText}>Play Now</Text>
         </TouchableOpacity>
@@ -96,19 +89,18 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: "#f0f4f8",
+  },
+  headerWrapper: {
+    paddingBottom: 10,
+    backgroundColor: "#D3D3D3",
   },
   header: {
-    position: "absolute",
-    top: 0,
-    width: "100%",
     height: 50,
-    backgroundColor: "#D3D3D3",
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    flexDirection: "row",
     paddingHorizontal: 20,
-    zIndex: 10,
   },
   headerText: {
     fontSize: 20,
@@ -122,59 +114,59 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   scrollContent: {
-    paddingTop: 60,
-    paddingBottom: 100,
+    paddingBottom: 200,
+    paddingHorizontal: 16,
+    paddingTop: 10,
   },
-  cardRow: {
+  card: {
     flexDirection: "row",
-    backgroundColor: "black",
-    marginHorizontal: 16,
-    marginBottom: 12,
+    backgroundColor: "white",
     borderRadius: 12,
-    padding: 12,
+    padding: 16,
+    marginBottom: 16,
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    elevation: 3,
   },
   cardImage: {
-    width: 70,
-    height: 70,
-    borderRadius: 10,
-    marginRight: 12,
+    width: 80,
+    height: 80,
+    borderRadius: 8,
+    marginRight: 16,
   },
-  cardTextArea: {
+  cardTextWrapper: {
     flex: 1,
-    justifyContent: "center",
   },
   cardTitle: {
+    fontSize: 18,
     fontFamily: "Manrope-Bold",
-    fontSize: 16,
     marginBottom: 4,
-    color: "white",
+    color: "#1c1c1e",
   },
   cardDescription: {
-    fontFamily: "Manrope-Regular",
     fontSize: 14,
-    color: "#D3D3D3",
+    fontFamily: "Manrope-Regular",
+    color: "#444",
+    marginBottom: 6,
   },
   cardFooter: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 6,
   },
   cardFooterText: {
-    fontFamily: "Manrope-Light",
     fontSize: 12,
-    color: "#777",
+    fontFamily: "Manrope-Light",
+    color: "gray",
+    marginLeft: 4,
   },
   buttonView: {
     position: "absolute",
-    bottom: 30,
     width: "100%",
     alignItems: "center",
+    zIndex: 20,
   },
   bottomButton: {
     width: "90%",
