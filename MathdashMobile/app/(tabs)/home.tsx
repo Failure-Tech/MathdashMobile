@@ -3,6 +3,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigation } from "expo-router";
 
 const loadFonts = () => {
   return Font.loadAsync({
@@ -44,6 +45,7 @@ const fakeData = [
 const HomeScreen = () => {
   const [loadedFont, setLoadedFont] = useState(false);
   const insets = useSafeAreaInsets();
+  const naivgation = useNavigation();
 
   useEffect(() => {
     loadFonts().then(() => setLoadedFont(true));
@@ -78,7 +80,7 @@ const HomeScreen = () => {
       </ScrollView>
 
       <View style={[styles.buttonView, { bottom: insets.bottom + 70 }]}>
-        <TouchableOpacity style={styles.bottomButton}>
+        <TouchableOpacity onPress={() => naivgation.navigate("play", {screen: "play"})} style={styles.bottomButton}>
           <Text style={styles.bottomButtonText}>Play Now</Text>
         </TouchableOpacity>
       </View>
@@ -89,11 +91,11 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f4f8",
+    backgroundColor: "black",
   },
   headerWrapper: {
     paddingBottom: 10,
-    backgroundColor: "#D3D3D3",
+    backgroundColor: "#333333",
   },
   header: {
     height: 50,
@@ -105,13 +107,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     fontFamily: "Manrope-Bold",
-    color: "black",
+    color: "white",
   },
   profileIcon: {
-    color: "gray",
+    color: "white",
   },
   settingsIcon: {
-    color: "gray",
+    color: "white",
   },
   scrollContent: {
     paddingBottom: 200,
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
   },
   card: {
     flexDirection: "row",
-    backgroundColor: "white",
+    // backgroundColor: "white",
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -144,12 +146,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Manrope-Bold",
     marginBottom: 4,
-    color: "#1c1c1e",
+    color: "white",
   },
   cardDescription: {
     fontSize: 14,
     fontFamily: "Manrope-Regular",
-    color: "#444",
+    color: "#D3D3D3",
     marginBottom: 6,
   },
   cardFooter: {
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: 50,
     borderRadius: 25,
-    backgroundColor: "#5DBB63",
+    backgroundColor: "#2196F3",
     justifyContent: "center",
     alignItems: "center",
   },
