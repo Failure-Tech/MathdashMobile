@@ -1,9 +1,9 @@
-import { Text, View, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
 import * as Font from "expo-font";
-import { useEffect, useState } from "react";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigation } from "expo-router";
+import { useEffect, useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const loadFonts = () => {
   return Font.loadAsync({
@@ -19,11 +19,13 @@ const fakeData = [
     image: require("@/assets/images/arml.png"),
     bigText: "Daily Puzzles",
     smallDescription: "Solved By 1.1m+ People",
+    onClick: "puzzles",
   },
   {
     image: require("@/assets/images/arml.png"),
     bigText: "Start Lessons",
     smallDescription: "What Is Competition Math",
+    onClick: "",
   },
   {
     image: require("@/assets/images/arml.png"),
@@ -34,11 +36,13 @@ const fakeData = [
     image: require("@/assets/images/arml.png"),
     bigText: "Coaching Assisstant",
     smallDescription: "Hit up Eric - Chill",
+    onClick: "",
   },
   {
     image: require("@/assets/images/arml.png"),
     bigText: "Play 1v1",
     smallDescription: "Play Over 2m+ Competitors Waiting",
+    onClick: "play",
   },
 ];
 
@@ -67,14 +71,16 @@ const HomeScreen = () => {
         {fakeData.map((item, index) => (
           <View style={styles.card} key={index}>
             <Image source={item.image} style={styles.cardImage} />
-            <View style={styles.cardTextWrapper}>
-              <Text style={styles.cardTitle}>{item.bigText}</Text>
-              <Text style={styles.cardDescription}>{item.smallDescription}</Text>
-              <View style={styles.cardFooter}>
-                <Icon name="calendar" size={14} color="gray" />
-                <Text style={styles.cardFooterText}>Event Info</Text>
+            <TouchableOpacity onPress={() => naivgation.navigate(item.onClick, {screen: item.onClick})}>
+              <View style={styles.cardTextWrapper}>
+                <Text style={styles.cardTitle}>{item.bigText}</Text>
+                <Text style={styles.cardDescription}>{item.smallDescription}</Text>
+                <View style={styles.cardFooter}>
+                  <Icon name="calendar" size={14} color="gray" />
+                  <Text style={styles.cardFooterText}>Event Info</Text>
+                </View>
               </View>
-            </View>
+            </TouchableOpacity>
           </View>
         ))}
       </ScrollView>
