@@ -1,25 +1,25 @@
 import { firestore } from "@/components/config"; // Your Firebase config
 import { randomProblems } from "@/constants/randomProblem";
 import {
-    collection,
-    deleteDoc,
-    doc,
-    getDoc,
-    getDocs,
-    limit,
-    onSnapshot,
-    orderBy,
-    query,
-    serverTimestamp,
-    setDoc,
-    updateDoc,
-    where
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+  where
 } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
 import { ActivityIndicator, Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 import uuid from "react-native-uuid";
 
-const Play = () => {
+export default function Play()  {
   const [userId] = useState<string>(() => uuid.v4()); // Generate once and keep it
   const [matchId, setMatchId] = useState<string | null>(null);
   const [question, setQuestion] = useState<{ problem: string; answer: string; solution: string } | null>(null);
@@ -360,4 +360,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Play;
+// export default Play;

@@ -31,6 +31,7 @@ const fakeData = [
     image: require("@/assets/images/arml.png"),
     bigText: "Browse Contests",
     smallDescription: "Continue Your Journey!",
+    onClick: "contests",
   },
   {
     image: require("@/assets/images/arml.png"),
@@ -46,10 +47,10 @@ const fakeData = [
   },
 ];
 
-const HomeScreen = () => {
+export default function HomeScreen() {
   const [loadedFont, setLoadedFont] = useState(false);
   const insets = useSafeAreaInsets();
-  const naivgation = useNavigation();
+  const navigation = useNavigation();
 
   useEffect(() => {
     loadFonts().then(() => setLoadedFont(true));
@@ -71,7 +72,7 @@ const HomeScreen = () => {
         {fakeData.map((item, index) => (
           <View style={styles.card} key={index}>
             <Image source={item.image} style={styles.cardImage} />
-            <TouchableOpacity onPress={() => naivgation.navigate(item.onClick, {screen: item.onClick})}>
+            <TouchableOpacity onPress={() => navigation.navigate(item.onClick, {screen: item.onClick})}>
               <View style={styles.cardTextWrapper}>
                 <Text style={styles.cardTitle}>{item.bigText}</Text>
                 <Text style={styles.cardDescription}>{item.smallDescription}</Text>
@@ -86,7 +87,7 @@ const HomeScreen = () => {
       </ScrollView>
 
       <View style={[styles.buttonView, { bottom: insets.bottom + 70 }]}>
-        <TouchableOpacity onPress={() => naivgation.navigate("play", {screen: "play"})} style={styles.bottomButton}>
+        <TouchableOpacity onPress={() => navigation.navigate("play", {screen: "play"})} style={styles.bottomButton}>
           <Text style={styles.bottomButtonText}>Play Now</Text>
         </TouchableOpacity>
       </View>
@@ -191,4 +192,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+// export default HomeScreen;
