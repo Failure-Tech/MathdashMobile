@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 
@@ -34,18 +34,17 @@ if (getApps().length === 0) {
 }
 
 // Initialize Firebase services
-const auth = getAuth(app);
+// const auth = getAuth(app);
 const firestore = getFirestore(app);
 const database = getDatabase(app);
 
 // Log configuration status for debugging
 console.log('Firebase services initialized:', {
-  auth: !!auth,
+  // auth: !!auth,
   firestore: !!firestore,
   database: !!database,
   appName: app.name,
   projectId: firebaseConfig.projectId
 });
 
-export { app, auth, database, firestore };
-
+export { app, database, firestore };
